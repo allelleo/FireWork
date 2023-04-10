@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from core import errors
 from apps.account.service.AppService import AccountServiceManager
 from .service.AppService import TaskServiceManager
-
+from .models import Task, TaskCategory
 
 # Create your views here.
 class CreateTaskAPIView(APIView):
@@ -46,3 +46,22 @@ class CreateTaskAPIView(APIView):
         except errors.NullValue:
             response.data = {'error': 'Не все данные заполенены'}
             return response
+
+
+class ReadTaskAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        response = Response()
+        task_id = request.data.get('task_id', None)
+        if not task_id:
+            response.data = {
+                'error': "id  нет"
+            }
+            return response
+
+        if Task.objects.filter(id=task_id).exists():
+            task = Task.objects.get(id=task_id)
+            return task
+        response.data = {
+            'error': "Задания с таким id  нет"
+        }
+        return response

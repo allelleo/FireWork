@@ -10,7 +10,7 @@ class JsonServiceManager:
                     'title': skill.title
                 }
             }
-            count+=1
+            count += 1
         notify = {}
         count = 0
         for n in user.notification.all():
@@ -85,5 +85,5 @@ class JsonServiceManager:
                 'data': user.portfolio.title
             },
             'skills': skills,
-                    'notify': notify
+            'notify': notify
         }

@@ -110,3 +110,24 @@ good:
     'task': str(task.id)
 }
 ```
+
+API account get user data
+
+```
+/api/account/endpoint/
+data => {
+    "token": "BHGd0w3WzOo8RNxuNrqJG4HaX0oy35HYzks"
+}
+
+return => 
+errors:
+{'error': 'Не все данные заполенены'}
+{'error': 'Токен не верный'}
+{'error': 'Пользователь не найден'}
+good:
+{
+    'username': 'res.username',
+    'email': 'res.email',
+    ...
+}
+```

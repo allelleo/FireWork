@@ -45,10 +45,12 @@ INSTALLED_APPS = [
     'apps.account.apps.AccountConfig',
     'apps.fwauth.apps.FwauthConfig',
     'apps.task.apps.TaskConfig',
+    'apps.chat.apps.ChatConfig',
     # project apps
 ]
 
 MIDDLEWARE = [
+'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -140,6 +142,7 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',
     'http://127.0.0.1:8000',
+    'http://127.0.0.1:8081',
 )
 CORS_ALLOW_CREDENTIALS = True
 

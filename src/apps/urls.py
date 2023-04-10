@@ -19,4 +19,5 @@ urlpatterns = [
     path('auth/', include('apps.fwauth.urls')),
     path('account/', include('apps.account.urls')),
     path('task/', include('apps.task.urls')),
+    path('chat/', include('apps.chat.urls')),
 ]

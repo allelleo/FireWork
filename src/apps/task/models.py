@@ -29,3 +29,6 @@ class Task(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.slug)
         super().save(*args, **kwargs)
+
+    def get_url(self):
+        return f"/task/check/{self.pk}"

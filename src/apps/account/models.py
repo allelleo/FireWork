@@ -49,6 +49,8 @@ class User(AbstractUser):
     skills = models.ManyToManyField(UserSkills)
     notification = models.ManyToManyField(UserNotification)
 
+    chats = models.ManyToManyField('chat.Chat')
+
     def save(self, *args, **kwargs):
         self.username = 'user' + str(self.profile.id)
         if not self.photo:

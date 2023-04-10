@@ -4,6 +4,7 @@ import jwt
 import datetime
 from core.settings import JWT_ENCODE_SECRET_KEY, TOKEN_LIFE_CYCLE_IN_MINUTES
 
+
 class AuthServiceManager:
     @staticmethod
     def create_user(name, surname, last_name, phone, email, is_customer, password):
@@ -17,7 +18,7 @@ class AuthServiceManager:
             raise errors.NullValue
         if not phone:
             raise errors.NullValue
-        if not is_customer:
+        if not is_customer and is_customer != False:
             raise errors.NullValue
 
         if User.objects.filter(email=email).exists():
