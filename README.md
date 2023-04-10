@@ -6,7 +6,8 @@
 
 API Register
 
-```/api/auth/register/
+```
+/api/auth/register/
 data => {
     "name": "Alexey",
     "surname": "Ovchinnikov",
@@ -28,7 +29,8 @@ good:
 
 API Login
 
-```/api/auth/register/
+```
+/api/auth/register/
 data => {
     "email": "dev.allelleo@dfafd.daf",
     "password": "qwerty"
@@ -45,7 +47,8 @@ good:
 
 API account endpoint
 
-```/api/account/endpoint/
+```
+/api/account/endpoint/
 data => {
     "token": "BHGd0w3WzOo8RNxuNrqJG4HaX0oy35HYzks"
 }
@@ -64,7 +67,8 @@ good:
 
 API Login
 
-```/api/auth/register/
+```
+/api/auth/register/
 data => {
     "email": "dev.allelleo@dfafd.daf",
     "password": "qwerty"
@@ -81,7 +85,8 @@ good:
 
 API Create Task
 
-```/api/task/create/
+```
+/api/task/create/
 data => {
     "title": "Task",
     "description": "hello hello",

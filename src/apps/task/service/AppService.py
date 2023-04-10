@@ -1,5 +1,7 @@
 from apps.task.models import Task, TaskCategory
 from core import errors
+
+
 class TaskServiceManager:
     @staticmethod
     def create_task(user, title, description, price, deadlines, place, category, photo):
@@ -17,7 +19,6 @@ class TaskServiceManager:
 
         if not place:
             raise errors.NullValue
-
 
         task = Task(title=title, description=description, price=price, deadlines=deadlines, place=place)
         task.from_customer = user
