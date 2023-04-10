@@ -78,3 +78,30 @@ errors:
 good:
 {'token': token}
 ```
+
+API Create Task
+
+```/api/task/create/
+data => {
+    "title": "Task",
+    "description": "hello hello",
+    "price": 12312,
+    "deadlines": "Today",
+    "place": "Web",
+    "category": [1,2,3],
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNjgzNzE0NDM2LCJpYXQiOjE2ODExMjI0MzZ9.jeQaN3kbBHGd0w3WzOo8RNxuNrqJG4HaX0oy35HYzks"
+}
+
+return => 
+errors:
+{'error': 'Нет токена'}
+{'error': 'Токен не правильный'}
+{'error': 'Пользователь не найден'}
+{'error': 'Вы не заказчик, а исполнитель'}
+{'error': 'Не все данные заполенены'}
+good:
+{
+    'status': 'success',
+    'task': str(task.id)
+}
+```

@@ -2,13 +2,23 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from utils import user_get_default_avatar
+from utils.slug import slugify
 
 
 # Create your models here.
 
+class UserNotification(models.Model):
+    title = models.CharField(max_length=200)
+    time = models.DateTimeField(auto_now_add=True)
+
+
 class UserSkills(models.Model):
     title = models.CharField(max_length=100)
     slug = models.CharField(max_length=100)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.slug)
+        super().save(*args, **kwargs)
 
 
 class UserPortfolio(models.Model):
@@ -37,10 +47,10 @@ class User(AbstractUser):
     rating = models.ForeignKey(UserRating, on_delete=models.CASCADE)
     portfolio = models.ForeignKey(UserPortfolio, on_delete=models.CASCADE)
     skills = models.ManyToManyField(UserSkills)
+    notification = models.ManyToManyField(UserNotification)
 
     def save(self, *args, **kwargs):
-        self.username = 'user'+ str(self.profile.id)
+        self.username = 'user' + str(self.profile.id)
         if not self.photo:
             self.photo = user_get_default_avatar.get()
         super().save(*args, **kwargs)
-
