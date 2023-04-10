@@ -199,3 +199,25 @@ good:
 }
 ```
 
+API get chat msgs
+```text
+/api/chat/get_chat/
+data -> {
+    "token": "eyJhbGciOiJdJhPX_Si5NkfTJZHRJ1li0S62WwkqStd4lKQQc2I",
+    "chat_id": 2
+}
+return => 
+errors:
+{'error': 'Не все данные заполенены'}
+{'error': 'Токен не верный'}
+{'error': 'Пользователь не найден'}
+good:
+{
+    "0": {
+        "from": "me",
+        "text": "Вас пригласили в чат",
+        "time": "2023-04-10 17:37:28.685184+00:00",
+        "viewed": false
+    }
+}
+```

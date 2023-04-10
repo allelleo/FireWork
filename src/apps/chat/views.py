@@ -98,3 +98,59 @@ class GetChatsForCurrentUserAPIView(APIView):
 
         response.data = user_chats
         return response
+
+
+class GetMessagesFromChatAPIView(APIView):
+    def post(self, request):
+        response = Response()
+        chat_id = request.data.get('chat_id', None)
+        token = request.data.get('token', None)
+
+        try:
+            user = AccountServiceManager.get_user_from_jwt(token)
+
+        except errors.NullToken:
+            response.data = {'error': 'Не все данные заполенены'}
+            return response
+        except errors.WrongToken:
+            response.data = {'error': 'Токен не верный'}
+            return response
+        except errors.UserNotFound:
+            response.data = {'error': 'Пользователь не найден'}
+            return response
+
+        if Chat.objects.filter(id=chat_id).exists():
+            chat = Chat.objects.get(id=chat_id)
+            msgs = {}
+            c = 0
+            for msg in chat.messages.all():
+                if msg.from_user == user:
+                    msgs = {
+                        **msgs,
+                        **{
+                            f'{c}': {
+                                'from': 'me',
+                                'text': msg.text,
+                                'time': str(msg.time),
+                                'viewed': msg.viewed
+                            }
+                        }
+
+                    }
+                else:
+                    msgs = {
+                        **msgs,
+                        **{
+                            f'{c}': {
+                                'from': msg.from_user.get_full_name(),
+                                'text': msg.text,
+                                'time': str(msg.time),
+                                'viewed': msg.viewed
+                            }
+                        }
+
+                    }
+            c += 1
+
+            response.data = msgs
+            return response
