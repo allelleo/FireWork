@@ -38,8 +38,63 @@ class StartChatAPIView(APIView):
 
         chat_to = User.objects.get(id=chat_to)
 
-        chat = Chat(task=Task.objects.get(id=task))
-        chat.save()
-        chat.messages.create(text='Вас пригласили в чат', from_user=chat_from, to_user=chat_to, viewed=False)
-        chat_from.chats.add(chat)
-        chat_to.chats.add(chat)
+        if not (Chat.objects.filter(user1=chat_from).exists() and Chat.objects.filter(
+                user2=chat_to).exists() and Chat.objects.filter(task=Task.objects.get(id=task)).exists()):
+            chat = Chat(task=Task.objects.get(id=task))
+            chat.user1 = chat_from
+            chat.user2 = chat_to
+            chat.save()
+            chat.messages.create(text='Вас пригласили в чат', from_user=chat_from, to_user=chat_to, viewed=False)
+            response.data = {'success': True}
+            return response
+
+        response.data = {'error': 'такой чат уже существует'}
+        return response
+
+
+class GetChatsForCurrentUserAPIView(APIView):
+    def post(self, request):
+        response = Response()
+        token = request.data.get('token', None)
+        try:
+            user = AccountServiceManager.get_user_from_jwt(token)
+
+        except errors.NullToken:
+            response.data = {'error': 'Не все данные заполенены'}
+            return response
+        except errors.WrongToken:
+            response.data = {'error': 'Токен не верный'}
+            return response
+        except errors.UserNotFound:
+            response.data = {'error': 'Пользователь не найден'}
+            return response
+
+        user_chats = {}
+        c = 0
+        chats = list(Chat.objects.all().filter(user1=user)) + list(Chat.objects.all().filter(user2=user))
+        for chat in chats:
+            if chat.user1 != user:
+                name = chat.user1.get_full_name()
+            else:
+                name = chat.user1.get_full_name()
+            last = list(chat.messages.all())[-1]
+            if last.from_user == user:
+                last_message = "Вы:" + str(last.text)
+            else:
+                last_message = last.get_full_name() + str(last.text)
+            user_chats = {
+                **user_chats,
+                **{
+                    f"{c}": {
+                        'chat_name': name,
+                        'last_message': last_message,
+                        'time': str(last.time),
+                        'viewed': last.viewed,
+                        'id': chat.id
+                    }
+                }
+            }
+            c += 1
+
+        response.data = user_chats
+        return response

@@ -16,3 +16,5 @@ class Chat(models.Model):
     messages = models.ManyToManyField(Message)
     task = models.ForeignKey('task.Task', on_delete=models.CASCADE)
     time_started = models.DateTimeField(auto_now_add=True)
+    user1 = models.ForeignKey('account.User', on_delete=models.CASCADE, related_name='user1', null=True)
+    user2 = models.ForeignKey('account.User', on_delete=models.CASCADE, related_name='user2', null=True)

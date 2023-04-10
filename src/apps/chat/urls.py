@@ -14,9 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from .views import StartChatAPIView
+from .views import StartChatAPIView,GetChatsForCurrentUserAPIView
 
 urlpatterns = [
     path('start/', StartChatAPIView.as_view()),
+    path('all/', GetChatsForCurrentUserAPIView.as_view()),
 
 ]

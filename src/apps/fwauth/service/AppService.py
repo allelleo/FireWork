@@ -38,6 +38,8 @@ class AuthServiceManager:
         user = User(name=name, surname=surname, email=email, last_name=last_name, phone=phone)
         user.set_password(password)
 
+        user.is_customer = is_customer
+
         user.profile = profile
         user.rating = rating
         user.portfolio = portfolio
