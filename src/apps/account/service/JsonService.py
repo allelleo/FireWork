@@ -1,16 +1,18 @@
 class JsonServiceManager:
     @staticmethod
     def user_to_json(user, c=None, nested=False):
-        skills = {}
+        skillss = {}
         count = 0
         for skill in user.skills.all():
-            slills = {
-                **skills,
+            skillss = {
+                **skillss,
                 f"{count}": {
+                    'id': skill.id,
                     'title': skill.title
                 }
             }
             count += 1
+        print(skillss)
         notify = {}
         count = 0
         for n in user.notification.all():
@@ -39,7 +41,7 @@ class JsonServiceManager:
                     'portfolio': {
                         'data': user.portfolio.title
                     },
-                    'skills': skills,
+                    'skills': skillss,
                     'notify': notify
                 }
             }
@@ -62,7 +64,7 @@ class JsonServiceManager:
                     'portfolio': {
                         'data': user.portfolio.title
                     },
-                    'skills': skills,
+                    'skills': skillss,
                     'notify': notify
                 }
             }
@@ -84,6 +86,6 @@ class JsonServiceManager:
             'portfolio': {
                 'data': user.portfolio.title
             },
-            'skills': skills,
+            'skills': skillss,
             'notify': notify
         }

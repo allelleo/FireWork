@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .service.AppService import AccountServiceManager
 from core import errors
 from .service.JsonService import JsonServiceManager
+from .models import UserSkills
 
 
 # Create your views here.
@@ -42,6 +43,7 @@ class GetCurrentUserData(APIView):
         try:
             res = AccountServiceManager.get_user_from_jwt(token)
             response.data = JsonServiceManager.user_to_json(res)
+            print(response.data)
             return response
         except errors.NullToken:
             response.data = {'error': 'Не все данные заполенены'}
@@ -60,4 +62,52 @@ class ChangeUserPhoto(APIView):
         response.data = {
             'pifor?': True
         }
+        return response
+
+class AddSkill(APIView):
+    def post(self, request, *args):
+        response = Response()
+
+        token = request.data.get('token', None)
+
+        try:
+            user = AccountServiceManager.get_user_from_jwt(token)
+
+        except errors.NullToken:
+            response.data = {'error': 'Не все данные заполенены'}
+            return response
+        except errors.WrongToken:
+            response.data = {'error': 'Токен не верный'}
+            return response
+        except errors.UserNotFound:
+            response.data = {'error': 'Пользователь не найден'}
+            return response
+
+        skill_id = request.data.get('skill', None)
+        if not skill_id:
+            response.data = {'error': 'Пустой skill_id'}
+            return response
+
+        skill = UserSkills.objects.get(id=skill_id)
+        user.skills.add(skill)
+        response.data = {'skill': skill.id}
+        return response
+
+class AllSkills(APIView):
+    def get(self, request):
+        skills = {}
+        c = 0
+        for skill in UserSkills.objects.all():
+            skills = {
+                **skills,
+                **{
+                    f'{c}': {
+                        'id': skill.id,
+                        'title': skill.title
+                    }
+                }
+            }
+            c += 1
+        response = Response()
+        response.data = skills
         return response
