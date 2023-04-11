@@ -261,3 +261,70 @@ good:
     }
 }
 ```
+
+API get skills
+```text
+/api/account/skill/all/
+GET
+return => 
+errors:
+-
+good:
+{
+    "0": {
+        "id": 1,
+        "title": "Python"
+    },
+    "1": {
+        "id": 2,
+        "title": "ui"
+    },
+    "2": {
+        "id": 3,
+        "title": "typescript"
+    },
+    "3": {
+        "id": 4,
+        "title": "js"
+    },
+    "4": {
+        "id": 5,
+        "title": "vue"
+    }
+}
+```
+
+API add skill o user
+```text
+/api/account/addSkill/
+{
+    "token": "eyJhJ1li0S62WwkqStd4lKQQc2I",
+    "skill": 1
+}
+return => 
+errors:
+-
+good:
+{
+    "0": {
+        "id": 1,
+        "title": "Python"
+    },
+    "1": {
+        "id": 2,
+        "title": "ui"
+    },
+    "2": {
+        "id": 3,
+        "title": "typescript"
+    },
+    "3": {
+        "id": 4,
+        "title": "js"
+    },
+    "4": {
+        "id": 5,
+        "title": "vue"
+    }
+}
+```
