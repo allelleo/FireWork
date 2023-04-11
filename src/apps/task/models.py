@@ -8,7 +8,7 @@ from utils.slug import slugify
 
 class TaskAnswer(models.Model):
     time = models.DateTimeField(auto_now_add=True)
-    comment = models.TextField(null=True, blank=True)
+    comment = models.TextField(default="Коментарий не отсавлен")
     from_user = models.ForeignKey('account.User', on_delete=models.CASCADE)
     to_task = models.ForeignKey('Task', on_delete=models.CASCADE)
     approved = models.BooleanField(default=False)

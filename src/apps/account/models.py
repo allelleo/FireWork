@@ -33,6 +33,12 @@ class UserRating(models.Model):
     score = models.FloatField(default=0)
 
 
+class UserFeedback(models.Model):
+    work_title = models.CharField(max_length=300)
+    feedback = models.TextField(default="Путота...")
+    stars = models.IntegerField(default=5)
+
+
 class User(AbstractUser):
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
@@ -49,6 +55,7 @@ class User(AbstractUser):
     skills = models.ManyToManyField(UserSkills)
     notification = models.ManyToManyField(UserNotification)
 
+    feedbacks = models.ManyToManyField(UserFeedback)
 
     def save(self, *args, **kwargs):
         self.username = 'user' + str(self.profile.id)

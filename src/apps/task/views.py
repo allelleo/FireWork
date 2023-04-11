@@ -7,6 +7,7 @@ from .service.AppService import TaskServiceManager
 from .models import Task, TaskCategory, TaskAnswer
 from .service.JsonService import JsonServiceManager
 
+
 # Create your views here.
 class CreateTaskAPIView(APIView):
     def post(self, request, *args, **kwargs):
@@ -68,6 +69,7 @@ class ReadTaskAPIView(APIView):
         }
         return response
 
+
 class CreateTaskAnswer(APIView):
     def post(self, request, *args):
         response = Response()
@@ -93,9 +95,77 @@ class CreateTaskAnswer(APIView):
             return response
 
         task = Task.objects.get(id=task_id)
-        t = TaskAnswer(comment=comment, from_user=user,to_task=task)
+        t = TaskAnswer(comment=comment, from_user=user, to_task=task)
         t.save()
         response.data = {
             'status': 'ok'
         }
+        return response
+
+
+class GetCurrentUserTasks(APIView):
+    def post(self, request, *args):
+        token = request.data.get('token', None)
+        response = Response()
+        try:
+            user = AccountServiceManager.get_user_from_jwt(token)
+        except errors.NullToken:
+            response.data = {'error': 'Нет токена'}
+            return response
+        except jwt.ExpiredSignatureError:
+            response.data = {'error': 'Токен не правильный'}
+            return response
+        except errors.UserNotFound:
+            response.data = {'error': 'Пользователь не найден'}
+            return response
+
+        tasks = {}
+        c = 0
+        for task in TaskAnswer.objects.filter(from_user=user):
+            tasks = {
+                **tasks,
+                **{
+                    f"{c}": {
+                        'task': JsonServiceManager.task_to_json(task.to_task),
+                        'time': task.time,
+                        'approved': task.approved,
+                        'comment': task.comment
+                    }
+                }
+            }
+            c += 1
+        response.data = tasks
+        return response
+
+class GetMyCreatedTasks(APIView):
+    def post(self, request, *args):
+        token = request.data.get('token', None)
+        response = Response()
+        try:
+            user = AccountServiceManager.get_user_from_jwt(token)
+        except errors.NullToken:
+            response.data = {'error': 'Нет токена'}
+            return response
+        except jwt.ExpiredSignatureError:
+            response.data = {'error': 'Токен не правильный'}
+            return response
+        except errors.UserNotFound:
+            response.data = {'error': 'Пользователь не найден'}
+            return response
+
+        tasks = {}
+        c = 0
+
+        for task in Task.objects.filter(from_customer=user):
+            tasks = {
+                **tasks,
+                **{
+                    f"{c}": {
+                        'task': JsonServiceManager.task_to_json(task.to_task),
+                        'answers': len(TaskAnswer.objects.filter(to_task=task))
+                    }
+                }
+            }
+            c += 1
+        response.data = tasks
         return response

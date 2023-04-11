@@ -328,3 +328,125 @@ good:
     }
 }
 ```
+API check current user tasks 
+ЭТО ДЛЯ ИСПОЛНИТЕЛЕЙ
+```text
+/api/tasks/my/
+{
+    "token": "eyJhJ1li0S62WwkqStd4lKQQc2I"
+}
+return => 
+errors:
+{'error': 'Нет токена'}
+{'error': 'Токен не правильный'}
+{'error': 'Пользователь не найден'}
+good:
+{
+    "0": {
+        "task": {
+            "title": "Task",
+            "description": "hello hello",
+            "price": 12312,
+            "deadlines": "Today",
+            "place": "Web",
+            "link": "/task/check/1",
+            "author": {
+                "id": 1,
+                "name": "Alexey",
+                "surname": "Ovchinnikov",
+                "last_name": "allelleo",
+                "phone": "1",
+                "email": "1@1.ru",
+                "is_customer": true,
+                "profile": {
+                    "description": null
+                },
+                "rating": {
+                    "score": 0.0
+                },
+                "portfolio": {
+                    "data": "Пользователь пока ничего не написал в портфолио"
+                },
+                "skills": {
+                    "0": {
+                        "id": 1,
+                        "title": "Python"
+                    }
+                },
+                "notify": {}
+            }
+        },
+        "time": "2023-04-11T08:37:38.349371Z",
+        "approved": false,
+        "comment": null
+    }
+}
+```
+
+API check current user tasks 
+ЭТО ДЛЯ ЗАКАЗЧИКОВ
+```text
+/api/tasks/myCreated/
+{
+    "token": "eyJhJ1li0S62WwkqStd4lKQQc2I"
+}
+return => 
+errors:
+{'error': 'Нет токена'}
+{'error': 'Токен не правильный'}
+{'error': 'Пользователь не найден'}
+good:
+"0": {
+        "task": {
+            "title": "Task",
+            "description": "hello hello",
+            "price": 12312,
+            "deadlines": "Today",
+            "place": "Web",
+            "link": "/task/check/1",
+            "author": {
+                "id": 1,
+                "name": "Alexey",
+                "surname": "Ovchinnikov",
+                "last_name": "allelleo",
+                "phone": "1",
+                "email": "1@1.ru",
+                "is_customer": true,
+                "profile": {
+                    "description": null
+                },
+                "rating": {
+                    "score": 0.0
+                },
+                "portfolio": {
+                    "data": "Пользователь пока ничего не написал в портфолио"
+                },
+                "skills": {
+                    "0": {
+                        "id": 1,
+                        "title": "Python"
+                    }
+                },
+                "notify": {}
+            }
+        },
+    "answers": 6,
+}
+```
+
+
+API GetWorkers
+```text
+/api/account/GetWorkers/
+GET
+return => 
+список юзеров
+```
+
+API GetCustomers
+```text
+/api/account/GetCustomers/
+GET
+return => 
+список юзеров
+```
