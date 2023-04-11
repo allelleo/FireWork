@@ -221,3 +221,43 @@ good:
     }
 }
 ```
+API read task
+```text
+/api/task/read/
+data -> {
+    "task_id": 2
+}
+return => 
+errors:
+{'error': "id  нет"}
+{'error': "Задания с таким id  нет"}
+good:
+{
+    "title": "Task",
+    "description": "hello hello",
+    "price": 12312,
+    "deadlines": "Today",
+    "place": "Web",
+    "link": "/task/check/1",
+    "author": {
+        "id": 1,
+        "name": "Alexey",
+        "surname": "Ovchinnikov",
+        "last_name": "allelleo",
+        "phone": "1",
+        "email": "1@1.ru",
+        "is_customer": true,
+        "profile": {
+            "description": null
+        },
+        "rating": {
+            "score": 0.0
+        },
+        "portfolio": {
+            "data": "Пользователь пока ничего не написал в портфолио"
+        },
+        "skills": {},
+        "notify": {}
+    }
+}
+```

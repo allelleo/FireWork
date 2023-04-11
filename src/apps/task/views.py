@@ -5,6 +5,7 @@ from core import errors
 from apps.account.service.AppService import AccountServiceManager
 from .service.AppService import TaskServiceManager
 from .models import Task, TaskCategory
+from .service.JsonService import JsonServiceManager
 
 # Create your views here.
 class CreateTaskAPIView(APIView):
@@ -49,7 +50,7 @@ class CreateTaskAPIView(APIView):
 
 
 class ReadTaskAPIView(APIView):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         response = Response()
         task_id = request.data.get('task_id', None)
         if not task_id:
@@ -60,7 +61,8 @@ class ReadTaskAPIView(APIView):
 
         if Task.objects.filter(id=task_id).exists():
             task = Task.objects.get(id=task_id)
-            return task
+            response.data = JsonServiceManager.task_to_json(task)
+            return response
         response.data = {
             'error': "Задания с таким id  нет"
         }

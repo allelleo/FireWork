@@ -5,6 +5,16 @@ from utils.slug import slugify
 
 
 # Create your models here.
+
+class TaskAnswer(models.Model):
+    time = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField()
+    from_user = models.ForeignKey('account.User', on_delete=models.CASCADE)
+    to_task = models.ForeignKey('Task', on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
+    
+
+
 class TaskCategory(models.Model):
     title = models.CharField(max_length=200)
     slug = models.CharField(max_length=200)
