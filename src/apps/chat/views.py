@@ -154,3 +154,32 @@ class GetMessagesFromChatAPIView(APIView):
 
             response.data = msgs
             return response
+
+class CreateMessage(APIView):
+    def post(self, request):
+        chat_id = request.date.get('chat_id')
+        msg = request.data.get('msg')
+        token = request.data.get('token', None)
+        response = Response()
+        try:
+            user = AccountServiceManager.get_user_from_jwt(token)
+
+        except errors.NullToken:
+            response.data = {'error': 'Не все данные заполенены'}
+            return response
+        except errors.WrongToken:
+            response.data = {'error': 'Токен не верный'}
+            return response
+        except errors.UserNotFound:
+            response.data = {'error': 'Пользователь не найден'}
+            return response
+
+        chat = Chat.objects.get(id=chat_id)
+        if chat.user1 != user:
+            user2 = chat.user1
+        else:
+            user2 = chat.user2
+
+        chat.messages.create(text=msg, from_user=user, to_user=user2)
+        response.data = {'status': 'ok'}
+        return response

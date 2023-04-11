@@ -34,15 +34,18 @@ class JsonServiceManager:
                     'is_customer': user.is_customer,
                     'profile': {
                         "description": user.profile.description,
+                        'spec': user.profile.spec
                     },
                     'rating': {
                         'score': user.rating.score
                     },
                     'portfolio': {
-                        'data': user.portfolio.title
+                        'data': user.portfolio.title,
+                        'spec': user.portfolio.spec
                     },
                     'skills': skillss,
-                    'notify': notify
+                    'notify': notify,
+
                 }
             }
         if nested == True:
@@ -57,6 +60,7 @@ class JsonServiceManager:
                     'is_customer': user.is_customer,
                     'profile': {
                         "description": user.profile.description,
+                        'spec': user.profile.spec
                     },
                     'rating': {
                         'score': user.rating.score
@@ -79,6 +83,7 @@ class JsonServiceManager:
             'is_customer': user.is_customer,
             'profile': {
                 "description": user.profile.description,
+                'spec': user.profile.spec
             },
             'rating': {
                 'score': user.rating.score

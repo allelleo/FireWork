@@ -27,6 +27,7 @@ class UserPortfolio(models.Model):
 
 class UserProfile(models.Model):
     description = models.TextField(null=True, blank=True)
+    spec = models.CharField(null=True, blank=True, max_length=100)
 
 
 class UserRating(models.Model):

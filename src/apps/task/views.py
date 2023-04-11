@@ -169,3 +169,20 @@ class GetMyCreatedTasks(APIView):
             c += 1
         response.data = tasks
         return response
+
+class GetTasks(APIView):
+    def get(self, request):
+        tasks = Task.objects.all()
+        c = 0
+        taskss = {}
+        for t in tasks:
+            taskss = {
+                **taskss,
+                **{
+                    f"{c}": JsonServiceManager.task_to_json(t)
+                }
+            }
+            c += 1
+        response = Response()
+        response.data = taskss
+        return response

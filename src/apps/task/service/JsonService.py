@@ -1,9 +1,12 @@
 from apps.account.service.JsonService import JsonServiceManager as JM
+
+
 class JsonServiceManager:
     @staticmethod
-    def task_to_json(task,c=None):
+    def task_to_json(task, c=None):
         return {
-            'title':task.title,
+            'id': task.id,
+            'title': task.title,
             'description': task.description,
             'price': task.price,
             'deadlines': task.deadlines,

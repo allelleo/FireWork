@@ -33,6 +33,7 @@ class EndpointView(APIView):
             response.data = {'error': 'Пользователь не найден'}
             return response
 
+
 class GetCurrentUserData(APIView):
     def post(self, request, *args, **kwargs):
 
@@ -55,6 +56,7 @@ class GetCurrentUserData(APIView):
             response.data = {'error': 'Пользователь не найден'}
             return response
 
+
 class ChangeUserPhoto(APIView):
     def post(self, request, *args):
         print(request.FILES['filename'].name)
@@ -63,6 +65,7 @@ class ChangeUserPhoto(APIView):
             'pifor?': True
         }
         return response
+
 
 class AddSkill(APIView):
     def post(self, request, *args):
@@ -93,6 +96,7 @@ class AddSkill(APIView):
         response.data = {'skill': skill.id}
         return response
 
+
 class AllSkills(APIView):
     def get(self, request):
         skills = {}
@@ -111,6 +115,7 @@ class AllSkills(APIView):
         response = Response()
         response.data = skills
         return response
+
 
 class CreateFeedBack(APIView):
     def post(self, request):
@@ -138,6 +143,7 @@ class CreateFeedBack(APIView):
         to = User.objects.get(id=to_user)
         to.feedbacks.create(work_title=work_title, feedback=feedback, stars=stars)
 
+
 class GetCustomers(APIView):
     def get(self, request):
         response = Response()
@@ -151,8 +157,10 @@ class GetCustomers(APIView):
                     f"{count}": JsonServiceManager.user_to_json(usr)
                 }
             }
+            count += 1
         response.data = users
         return response
+
 
 class GetWorkers(APIView):
     def get(self, request):
@@ -167,5 +175,14 @@ class GetWorkers(APIView):
                     f"{count}": JsonServiceManager.user_to_json(usr)
                 }
             }
+            count += 1
         response.data = users
+        return response
+
+class GetUserById(APIView):
+    def post(self, request):
+        user_id = request.data.get('user_id')
+        user = User.objects.get(id=user_id)
+        response = Response()
+        response.data = JsonServiceManager.user_to_json(user)
         return response

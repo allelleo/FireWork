@@ -438,7 +438,10 @@ good:
 API GetWorkers
 ```text
 /api/account/GetWorkers/
-GET
+POST
+data => {
+    "user_id": 1
+}
 return => 
 список юзеров
 ```
@@ -449,4 +452,37 @@ API GetCustomers
 GET
 return => 
 список юзеров
+```
+
+API get all tasks
+```text
+/api/task/All/
+GET
+return => 
+список тасок
+```
+
+
+API get user by id
+```text
+/api/account/get_user/
+GET
+return => 
+список юзер
+```
+
+Api chat create message
+```text
+/api/chat/CreateMessage
+data =>{
+    "chat_id": 1,
+    "msg": "Hello",
+    "token": "sdkjgsdgksgns",
+}
+errors =>
+{'error': 'Не все данные заполенены'}
+{'error': 'Токен не верный'}
+{'error': 'Пользователь не найден'}
+ok:
+{'status': 'ok'}
 ```
