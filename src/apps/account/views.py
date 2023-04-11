@@ -52,3 +52,12 @@ class GetCurrentUserData(APIView):
         except errors.UserNotFound:
             response.data = {'error': 'Пользователь не найден'}
             return response
+
+class ChangeUserPhoto(APIView):
+    def post(self, request, *args):
+        print(request.FILES['filename'].name)
+        response = Response()
+        response.data = {
+            'pifor?': True
+        }
+        return response
