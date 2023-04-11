@@ -140,6 +140,7 @@ class CreateFeedBack(APIView):
 
 class GetCustomers(APIView):
     def get(self, request):
+        response = Response()
         c = User.objects.filter(is_customer=True)
         users = {}
         count = 0
@@ -150,10 +151,12 @@ class GetCustomers(APIView):
                     f"{count}": JsonServiceManager.user_to_json(usr)
                 }
             }
-        return users
+        response.data = users
+        return response
 
 class GetWorkers(APIView):
     def get(self, request):
+        response = Response()
         c = User.objects.filter(is_customer=False)
         users = {}
         count = 0
@@ -164,4 +167,5 @@ class GetWorkers(APIView):
                     f"{count}": JsonServiceManager.user_to_json(usr)
                 }
             }
-        return users
+        response.data = users
+        return response
