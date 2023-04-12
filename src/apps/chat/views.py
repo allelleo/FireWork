@@ -129,6 +129,7 @@ class GetMessagesFromChatAPIView(APIView):
                         **msgs,
                         **{
                             f'{c}': {
+                                'id': msg.id,
                                 'from': 'me',
                                 'text': msg.text,
                                 'time': str(msg.time),
@@ -142,6 +143,7 @@ class GetMessagesFromChatAPIView(APIView):
                         **msgs,
                         **{
                             f'{c}': {
+                                'id': msg.id,
                                 'from': msg.from_user.get_full_name(),
                                 'text': msg.text,
                                 'time': str(msg.time),

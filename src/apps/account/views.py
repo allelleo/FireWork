@@ -44,7 +44,6 @@ class GetCurrentUserData(APIView):
         try:
             res = AccountServiceManager.get_user_from_jwt(token)
             response.data = JsonServiceManager.user_to_json(res)
-            print(response.data)
             return response
         except errors.NullToken:
             response.data = {'error': 'Не все данные заполенены'}
