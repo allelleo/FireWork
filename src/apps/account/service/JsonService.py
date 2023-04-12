@@ -45,6 +45,7 @@ class JsonServiceManager:
                     },
                     'skills': skillss,
                     'notify': notify,
+                    'photo': user.photo
 
                 }
             }
@@ -69,7 +70,8 @@ class JsonServiceManager:
                         'data': user.portfolio.title
                     },
                     'skills': skillss,
-                    'notify': notify
+                    'notify': notify,
+                    'photo': user.photo
                 }
             }
 
@@ -92,5 +94,6 @@ class JsonServiceManager:
                 'data': user.portfolio.title
             },
             'skills': skillss,
-            'notify': notify
+            'notify': notify,
+            'photo': user.photo
         }
