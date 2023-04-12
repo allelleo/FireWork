@@ -185,3 +185,11 @@ class GetUserById(APIView):
         response = Response()
         response.data = JsonServiceManager.user_to_json(user)
         return response
+
+class CreateNorify(APIView):
+    def post(self, request):
+        to_user = request.data.get('to_user')
+        title = request.data.get('title')
+
+        usr=User.objects.get(id=to_user)
+        usr.notification.create(title=title)

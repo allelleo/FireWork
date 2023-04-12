@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from .views import EndpointView, GetCurrentUserData,ChangeUserPhoto, AddSkill,AllSkills, GetCustomers, GetWorkers,GetUserById
+from .views import EndpointView, GetCurrentUserData,ChangeUserPhoto, AddSkill,AllSkills, GetCustomers, GetWorkers,GetUserById,CreateNorify
 
 urlpatterns = [
     path('endpoint/', EndpointView.as_view()),
@@ -25,4 +25,5 @@ urlpatterns = [
     path('GetWorkers/', GetWorkers.as_view()),
     path('GetCustomers/', GetCustomers.as_view()),
     path('get_user/', GetUserById.as_view()),
+    path('newNotify/', CreateNorify.as_view()),
 ]
