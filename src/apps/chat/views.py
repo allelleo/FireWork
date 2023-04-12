@@ -157,7 +157,7 @@ class GetMessagesFromChatAPIView(APIView):
 
 class CreateMessage(APIView):
     def post(self, request):
-        chat_id = request.date.get('chat_id')
+        chat_id = request.data.get('chat_id')
         msg = request.data.get('msg')
         token = request.data.get('token', None)
         response = Response()
